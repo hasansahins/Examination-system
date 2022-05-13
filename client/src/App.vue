@@ -3,22 +3,13 @@ import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="">
-    <div v-if="User.isLogin">
-      <h1>app</h1>
-      <RouterView />
-    </div>
-
-    <div v-if="User.isLogin === false">
-      <Login />
-    </div>
-  </div>
+  <RouterView />
 </template>
 
 
 
 <script>
-import Login from "./views/Login.vue";
+import Login from "./views/LoginView.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "App",

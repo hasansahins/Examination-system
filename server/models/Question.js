@@ -2,44 +2,11 @@ const mongoose = require("mongoose");
 
 const QuestionSchema = new mongoose.Schema(
   {
-    // answers: {
-    //   type: Map,
-    //   of: [
-    //     new mongoose.Schema({
-    //       choiceName: {
-    //         type: String,
-    //         required: true,
-    //       },
-    //       answer: {
-    //         type: String,
-    //         required: true,
-    //       },
-    //     }),
-    //   ],
-    // },
-    // answers: {
-    //   type: [
-    //     {
-    //       choiceName: {
-    //         type: String,
-    //         required: true,
-    //       },
-    //       answer: {
-    //         type: String,
-    //         required: true,
-    //       },
-    //     },
-    //   ],
-    // },
     answers: {
       type: [mongoose.Schema.Types.Mixed],
       required: true,
     },
-    answer: {
-      type: String,
-      required: true,
-    },
-    image: {
+    description: {
       type: String,
     },
     question: {
@@ -48,7 +15,7 @@ const QuestionSchema = new mongoose.Schema(
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: true
     },
   },
   {

@@ -17,6 +17,15 @@ const UserSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
+    settings: {
+      type: String,
+      required: true,
+      default: "1",
+    },
+    answers: {
+      type: [mongoose.Schema.Types.Mixed],
+      required: true,
+    },
   },
   {
     timestamps: true,

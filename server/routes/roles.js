@@ -2,12 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 
-const Category = require("../models/Category");
+const Role = require("../models/Role");
 
 router.get("/", async (req, res) => {
   try {
-    const categories = await Category.find();
-    res.json(categories);
+    const roles = await Role.find();
+    res.json(roles);
   } catch (err) {
     res.json({ message: err });
   }
@@ -15,8 +15,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
-    res.json(category);
+    const role = await Role.findById(req.params.id);
+    res.json(role);
   } catch (err) {
     res.json({ message: err });
   }
@@ -24,27 +24,36 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    const roleNameCheck = await Role.findOne({ name: req.body.name });
+    if (roleNameCheck && req.body._id !== roleNameCheck._id.toString()) {
+      return res
+        .status(200)
+        .json({ error: `"${req.body.name}" isminde kayıtlı rol vardır. Lütfen farklı bir rol adı giriniz.` });
+    }
+
     // NEW ROLE
     if (req.body._id === "0") {
-      const category = new Category({
+      const role = new Role({
         name: req.body.name,
-        description: req.body.description,
+        pages: req.body.pages,
+        active: req.body.active,
       });
 
-      const result = await category.save();
+      const result = await role.save();
       res.json(result);
     }
     // UPDATE USER
     else {
-      const category = await Category.findById(req.body._id);
-      if (category) {
-        const result = await Category.updateOne(
+      const role = await Role.findById(req.body._id);
+      if (role) {
+        const result = await Role.updateOne(
           {
             _id: mongoose.Types.ObjectId(req.body._id),
           },
           {
             name: req.body.name,
-            description: req.body.description,
+            active: req.body.active,
+            pages: req.body.pages,
           }
         );
         res.json(result);
@@ -57,13 +66,13 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
-    if (category) {
-      const result = await Category.deleteOne({ _id: req.params.id });
+    const role = await Role.findById(req.params.id);
+    if (role) {
+      const result = await Role.deleteOne({ _id: req.params.id });
       if (result.deletedCount > 0) {
         res.json(true);
       } else {
-        res.json({ message: "Category not found" });
+        res.json({ message: "Role not found" });
       }
     }
   } catch (err) {

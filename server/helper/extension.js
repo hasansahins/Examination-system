@@ -9,7 +9,7 @@ const generateToken = (user) => {
     role: user.role,
   };
   const options = {
-    expiresIn: "1h",
+    expiresIn: "30d",
   };
   return jwt.sign(payload, "examinationsystem2022", options);
 };
@@ -24,13 +24,16 @@ const DeleteCookie = (res, cookieName) => {
 
 const GetCookie = (req, cookieName) => {
   return req.cookies[cookieName];
+
 };
 
-const SetCookie = (res, [cookieName, value]) => {
+const SetCookie = (res, [cookieName, value,date]) => {
+  console.log("date",date);
   res.cookie(cookieName, value, {
-    expires: new Date(Date.now() + 3600 * 1000),
+    expires: date,
     httpOnly: true,
   });
+  
 };
 
 const UpdateCookie = (req, res, cookieName, newValue) => {

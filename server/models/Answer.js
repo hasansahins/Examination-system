@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const AnswerSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     question: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Question",
@@ -9,11 +14,6 @@ const AnswerSchema = new mongoose.Schema(
     },
     answer: {
       type: String,
-      required: true,
-    },
-    times: {
-      type: Number,
-      default: 0,
       required: true,
     },
     isTrue: {

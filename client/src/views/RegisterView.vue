@@ -16,19 +16,11 @@
         bg-white
       "
     >
-      <div class="px-6 py-5 text-black w-full">
+      <form class="px-6 py-5 text-black w-full" @submit="onSubmit">
         <!-- <h1 class="mb-3 text-3xl text-center font-bold">Examination System</h1> -->
-        <div
-          class="
-            flex
-            items-center
-            mb-4
-           
-          "
-        >
+        <div class="flex items-center mb-4">
           <h4 class="text-xl text-center font-semibold px-2">
-            Examination
-            System
+            Examination System
           </h4>
         </div>
 
@@ -37,6 +29,7 @@
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="fullname"
           placeholder="Ad Soyad"
+          v-model="fullName"
         />
 
         <input
@@ -44,6 +37,7 @@
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="email"
           placeholder="E-Posta"
+          v-model="email"
         />
 
         <input
@@ -51,10 +45,11 @@
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
           placeholder="Şifre"
+          v-model="password"
         />
 
         <button
-          type="button"
+          type="submit"
           class="
             inline-block
             px-7
@@ -77,7 +72,6 @@
           "
           data-mdb-ripple="true"
           data-mdb-ripple-color="light"
-          @click="register"
         >
           Kayıt Ol
         </button>
@@ -124,14 +118,41 @@
         >
           Giriş Yap
         </router-link>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      message: "",
+      fullName: "",
+    };
+  },
+  methods: {
+    ...mapActions(["RegisterUser"]),
+    onSubmit(e) {
+      e.preventDefault();
+      const user = {
+        email: this.email,
+        password: this.password,
+        fullName: this.fullName,
+      };
+      // this.$store.dispatch("RegisterUser", user);
+
+      this.RegisterUser(user);
+
+    },
+  },
+};
 </script>
+
 
 <style>
 </style>

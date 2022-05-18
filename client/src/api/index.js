@@ -1,17 +1,29 @@
 import axios from "axios";
-
-const baseUrl = "https://jsonplaceholder.typicode.com/";
-
-export function Get(url) {
-  return axios.get(baseUrl + url);
+const baseUrl = "http://localhost:3030/";
+const options = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  withCredentials: true,
+};
+export async function Get(url) {
+  return await axios.get(baseUrl + url, options);
 }
 
-export function GetWithParams(url, params) {
-  return axios.get(baseUrl + url, { params: params });
+export async function GetWithParams(url) {
+  return await axios.get(baseUrl + url, options);
 }
 
-export function Post(url, data) {
-  console.log("Post", "url:", url, "params,", data);
+export async function Post(url, data) {
+  return await axios.post(baseUrl + url, data, options);
+}
 
-  return axios.post(baseUrl + url, { data: data });
+export async function Put(url, data) {
+  return await axios.put(baseUrl + url, data, options);
+}
+
+export async function Delete(url) {
+  return await axios.delete(baseUrl + url, options);
 }

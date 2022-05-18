@@ -1,0 +1,33 @@
+{
+  "menu": [
+    {
+      "name": "Dashboard",
+      "url": "dashboard"
+    },
+    {
+      "name": "Kullanıcılar",
+      "url": "kullanicilar"
+    },
+    {
+      "name": "Roller",
+      "url": "roller"
+    },
+    {
+      "name": "Sistem Ayarları",
+      "url": "ayarlar"
+    },
+    {
+      "name": "Sorular",
+      "url": "sorular"
+    },
+    {
+      "name": "Soru Kategorileri",
+      "url": "kategoriler"
+    },
+
+    {
+      "name": "Sınav",
+      "url": "sinav"
+    }
+  ]
+}

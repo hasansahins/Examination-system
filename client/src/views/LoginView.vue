@@ -1,6 +1,6 @@
 <template>
-  <section class="h-screen bg-gray-300">
-    <div class="container px-6 py-12 h-full m-auto">
+  <section>
+    <div class=" m-auto">
       <div
         class="
           flex
@@ -12,11 +12,12 @@
           text-gray-800
           shadow-2xl
           md:p-20
+          p-5
           rounded-2xl
           bg-white
         "
       >
-        <div class="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
+        <div class="md:w-6/12 lg:w-6/12 mb-12 md:mb-0 hidden xl:block">
           <img
             src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
             class="w-full"
@@ -24,7 +25,7 @@
           />
         </div>
         <div class="md:w-8/12 lg:w-5/12 lg:ml-20">
-          <form>
+          <form @submit="onSubmit">
             <h1 class="text-center font-bold text-4xl mb-10">
               Online Sınav Sistemi
             </h1>
@@ -123,7 +124,7 @@
                   >Beni Hatırla</label
                 >
               </div>
-              <a
+              <!-- <a
                 href="#!"
                 class="
                   text-blue-600
@@ -135,17 +136,14 @@
                   ease-in-out
                 "
                 >Şifremi Unuttum ?</a
-              >
+              > -->
             </div>
-            <p
-              class="text-red-600"
-              v-if="User.isLogin === false && User.message.length > 0"
-            >
+            <p class="text-red-600" v-if="User.message.length > 0">
               {{ User.message }}
             </p>
             <!-- Submit button -->
             <button
-              type="button"
+              type="submit"
               class="
                 inline-block
                 px-7
@@ -171,7 +169,6 @@
               "
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
-              @click="login"
             >
               Giriş Yap
             </button>
@@ -214,8 +211,6 @@
                 mb-3
               "
               style="background-color: #3b5998"
-              href="#!"
-              role="button"
               data-mdb-ripple="true"
               data-mdb-ripple-color="light"
               :to="'/register'"
@@ -230,22 +225,27 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
       email: "",
       password: "",
+      message: "",
     };
   },
   computed: {
     ...mapGetters(["User"]),
   },
   methods: {
-    ...mapActions(["updateIsLogin"]),
-    login() {
-      this.updateIsLogin([this.email, this.password]);
+    onSubmit(e) {
+      e.preventDefault();
+      const user = {
+        email: this.email,
+        password: this.password,
+      };
+      this.$store.dispatch("LoginUser", user);
     },
   },
 };
